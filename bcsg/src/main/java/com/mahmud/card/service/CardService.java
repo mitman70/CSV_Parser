@@ -1,0 +1,92 @@
+package com.mahmud.card.service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import com.mahmud.card.exception.CardException;
+import com.mahmud.card.model.Card;
+import com.mahmud.card.parser.IParser;
+import com.mahmud.card.utils.CardUtils;
+
+public class CardService implements ICardService {
+	
+	@Autowired
+	private IParser parser;
+	
+	
+	private Map<String,String> cardMapping;
+	
+	public CardService(Map<String,String> cardMapping)
+	{
+		this.cardMapping = cardMapping;
+	}
+	
+	public CardService()
+	{
+		
+	}
+
+	@Override
+	public List<Card> processCards(boolean descending) {
+		
+		ArrayList<Card> processdCardsList = new ArrayList<Card>();
+		
+		ArrayList<Card> cardsList = parser.parse();
+		for(Card card:cardsList)
+		{
+			if(cardMapping.containsKey(card.getBankName()))
+			{
+				try {
+					String maskedCardNo = CardUtils.maskCardNo(card.getCardNo(), cardMapping.get(card.getBankName()));
+					card.setMaskedCardNo(maskedCardNo);
+					processdCardsList.add(card);
+				} catch (CardException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		Collections.sort(processdCardsList);
+		if(descending==true)
+		{
+			Collections.reverse(processdCardsList);
+		}
+		return processdCardsList;
+	}
+
+	@Override
+	public IParser getParser() {
+		// TODO Auto-generated method stub
+		return parser;
+	}
+
+	@Override
+	public String printCardDetails(List<Card> cards) {
+		String output = "";
+		for(Card card:cards)
+		{
+			output +=card.toString()+"\n";
+		}
+		return output;
+	}
+
+	public Map<String, String> getCardMapping() {
+		return cardMapping;
+	}
+
+	public void setCardMapping(Map<String, String> cardMapping) {
+		this.cardMapping = cardMapping;
+	}
+
+	public void setParser(IParser parser) {
+		this.parser = parser;
+	}
+
+
+}
