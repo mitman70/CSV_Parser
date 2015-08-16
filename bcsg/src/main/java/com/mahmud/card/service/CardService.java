@@ -20,16 +20,6 @@ public class CardService implements ICardService {
 	
 	
 	private Map<String,String> cardMapping;
-	
-	public CardService(Map<String,String> cardMapping)
-	{
-		this.cardMapping = cardMapping;
-	}
-	
-	public CardService()
-	{
-		
-	}
 
 	@Override
 	public List<Card> processCards(boolean descending) {
