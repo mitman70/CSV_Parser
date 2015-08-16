@@ -11,5 +11,5 @@ you can run it using the executable jar  passing in 2 command line arguments:
 
 
 
-eg java -jar CardApp-0.0.1-SNAPSHOT.jar ./mid-test.csv true
+eg java -jar CardApp-0.0.1-SNAPSHOT.jar . true
 
