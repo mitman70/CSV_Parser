@@ -1,5 +1,6 @@
 package com.mahmud.card.parser;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,18 +19,46 @@ import com.mahmud.card.utils.CardUtils;
 @Component
 public class CardCSVParser implements IParser {
 	
-	private String file;
+	private String dir;
 	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-yyyy"); 
 
 	@Override
-	public void setFile(String file) {
-		this.file = file;
+	public void setDir(String dir) {
+		this.dir = dir;
 		
 	}
-
+	
+	
 	@Override
-	public ArrayList<Card> parse() {
+	public ArrayList<Card> parse()
+	{
+		return processFiles(dir);
+	}
+	
+	
+	private ArrayList<Card> processFiles(String directoryName){
+
+        File directory = new File(directoryName);
+        ArrayList<Card> cards = new ArrayList<Card>();
+        
+        File[] fList = directory.listFiles();
+
+        for (File file : fList){
+            if (file.isFile()&&file.getName().endsWith("csv")){
+                System.out.println("Processing "+file.getName());
+                cards.addAll(processFile(directoryName+File.separator+file.getName()));
+            }
+        }
+        
+        return cards;
+    }
+	
+	
+	
+
+	
+	private ArrayList<Card> processFile(String file) {
 
 		ArrayList<Card> cards = new ArrayList<Card>();
 
@@ -38,7 +67,7 @@ public class CardCSVParser implements IParser {
 
 		CSVParser parser;
 		try {
-			parser = new CSVParser(new FileReader(getFile()), format);
+			parser = new CSVParser(new FileReader(file), format);
 
 
 			List<Card> emps = new ArrayList<Card>();
@@ -64,8 +93,8 @@ public class CardCSVParser implements IParser {
 
 	}
 
-	public String getFile() {
-		return file;
+	public String getDir() {
+		return dir;
 	}
 
 	public SimpleDateFormat getDt() {

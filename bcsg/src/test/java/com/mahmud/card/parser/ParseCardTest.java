@@ -125,7 +125,7 @@ public class ParseCardTest {
 	@Test
 	public void testParseCSV() {
 		IParser csvParser = new CardCSVParser();
-		csvParser.setFile("test.csv");
+		csvParser.setDir("./");
 		
 		ArrayList<Card> actualCards = csvParser.parse();
 		

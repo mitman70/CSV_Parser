@@ -52,6 +52,11 @@ public class CardService implements ICardService {
 			}
 		}
 		
+		return sortResults(descending, processdCardsList);
+	}
+
+	private List<Card> sortResults(boolean descending,
+			ArrayList<Card> processdCardsList) {
 		Collections.sort(processdCardsList);
 		if(descending==true)
 		{

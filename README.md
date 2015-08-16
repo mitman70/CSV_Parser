@@ -2,9 +2,11 @@
 CSV Parser
 
 
-you can run it using the executable jar in the target dir with the csv in the same directory as shown below or another location as long as the full path is specified in the first command line argument.
+you can run it using the executable jar  passing in 2 command line arguments:
 
-The second argument is if you want the results in descending order
+- directory containing the file
+
+- if you require the results in descending order
 
 
 

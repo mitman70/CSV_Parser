@@ -47,7 +47,7 @@ public class CardServiceTest {
 		setupCardMapping();
 		
 		
-		parser.setFile("testCSV");
+		parser.setDir(".");
 		cardService.setParser(parser);
 		cardService.setCardMapping(cardMapping);
 	}

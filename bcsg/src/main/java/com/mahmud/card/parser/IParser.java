@@ -6,7 +6,7 @@ import com.mahmud.card.model.Card;
 
 public interface IParser {
 
-	void setFile(String file);
+	void setDir(String dir);
 
 	ArrayList<Card> parse();
 

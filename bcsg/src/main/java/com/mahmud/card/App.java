@@ -23,7 +23,7 @@ public class App {
 
 		if(args.length!=2)
 		{
-			System.out.println("Need to pass in path of file and true or false for descending");
+			System.out.println("Need to pass in dir of where file is located and true or false for descending");
 			System.out.println("eg java -jar CardApp-0.0.1-SNAPSHOT.jar ./mid-test.csv true");
 			System.exit(1);
 		}
@@ -36,13 +36,13 @@ public class App {
 	}
 	
 	
-	private void startService(ApplicationContext context, String file,boolean descending)
+	private void startService(ApplicationContext context, String dir,boolean descending)
 	{
 		
  
 		ICardService service = (ICardService) context.getBean("cardService");
 		IParser parser = service.getParser();
-		parser.setFile(file);
+		parser.setDir(dir);
 		List<Card> cards = service.processCards(descending);
 		System.out.print(service.printCardDetails(cards));
 		
